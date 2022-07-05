@@ -25,4 +25,14 @@ const postData = [
       "The recreation industry generates hundreds of millions of dollars each year in the GDP, more so than oil and gas. This is how the techworld can leverage that and enhance both industries together",
     user_id: "3",
   },
+  {
+    title: "Outdoor Recreation and Tech Round Two",
+    post_text:
+      "The recreation industry generates hundreds of millions of dollars each year in the GDP, more so than oil and gas. This is how the techworld can leverage that and enhance both industries together",
+    user_id: "3",
+  },
+
 ];
+
+const postSeed = () => post.bulkCreate(postData);
+module.exports = postSeed;

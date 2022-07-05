@@ -17,19 +17,19 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// get comment by id
-router.get("/:id", async (req, res) => {
-  try {
-    const commentData = await comment.findByPk(req.params.id);
-    if (!commentData) {
-      res.status(404).json({ message: "No comment with this id!" });
-      return;
-    }
-    res.status(200).json(commentData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// get comment by id - Not sure if we need this - just use Post id?
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const commentData = await comment.findByPk(req.params.id);
+//     if (!commentData) {
+//       res.status(404).json({ message: "No comment with this id!" });
+//       return;
+//     }
+//     res.status(200).json(commentData);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 // post comment
 router.post('/', (req, res) => {

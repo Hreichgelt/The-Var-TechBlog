@@ -30,7 +30,19 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 // post comment
+router.post('/', (req, res) => {
+    try {
+        const commentData = await comment.create({
+            comment_text: req.body.comment_text,
+            user_id: req.body.user_id
+        })
+        res.status(200).json(commentData);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
 
 // delete comment
 router.delete("/:id", withAuth, async (req, res) => {

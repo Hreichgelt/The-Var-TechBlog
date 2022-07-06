@@ -1,23 +1,19 @@
-async function update(event) {
+async function post(event) {
     event.preventDefault();
-
-    const id = window.location.toString().split('/')[
-        window.location.toString().split('/').length - 1
-    ];
-
     const title = $('input[name="post-title"]').value;
     const post_text = $('textarea[name="post-text"]').value;
 
-    const response = await fetch('/api/post/${id}', {
-        method: 'PUT',
+    const response = await fetch('/api/post', {
+        method: 'POST', 
         body: JSON.stringify({
-            title, 
+            title,
             post_text
         }),
         headers: {
             'Content-Type': 'application/json'
         }
     });
+
     if (response.ok) {
         document.location.replace('/dashboard');
     } else {
@@ -25,4 +21,4 @@ async function update(event) {
     }
 }
 
-$('.update-post-form').addEventListener('submit', update);
+$('.new-post-form').addEventListener('submit', post);

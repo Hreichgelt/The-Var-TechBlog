@@ -1,0 +1,32 @@
+<article>
+    <a href="/dashboard">Back to dashboard</a>
+    <h3>
+        Edit my Post
+    </h3>
+    <form class="update-post-form">
+        <div>
+            <input name="post-title" type="text" value="{{post.title}}"/>
+        </div>
+        <div>
+            <textarea name="post-text">{{post.post_text}}</textarea>
+        </div>
+        <div>
+            You posted on {{format_date post.created_at}}
+            <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comment.length}}</a>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+            <button type="button" class="delete-post-btn">Delete</button>
+        </div>
+    </form>
+</article>
+
+<form class="comment-form">
+    <div>
+        <textarea name="comment-body"></textarea>
+    </div>
+</form>
+
+{{> comment post.comment}}
+
+{{!-- <script src=""></script> --}}

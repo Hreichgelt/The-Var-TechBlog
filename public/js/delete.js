@@ -10,7 +10,7 @@ async function deleteF(event) {
     if (response.ok) {
         document.location.replace('/dashboard');
     } else {
-        AudioListener(response.statusText)
+        alert(response.statusText)
     }
 }
 

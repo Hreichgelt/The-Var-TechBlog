@@ -1,16 +1,27 @@
 // @/api/posts
 // dependencies
-// Notes : do we need to utilize inclusions/exclusions/attributes?
 const router = require("express").router();
-// const bcrypt = require("bcrypt"); - not being used?
 const { user, post, comment } = require("../../models");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const withAuth = require("../../utils/auth");
 
-// get all posts
+// get all posts - help from classmates
 router.get("/", async (req, res) => {
   try {
-    const postData = await post.findAll();
+    const postData = await post.findAll({
+      attributes: { exclude: ['user_id'] },
+      order: [['date_created', 'DESC']],
+      include: [
+        {
+          model: user,
+          attributes: ['username']
+        },
+        {
+          model: Comment,
+          include: { user, attributes: ['username'] }
+        },
+      ]
+    });
     res.status(200).json(postData);
   } catch (err) {
     res.status(500).json(err);
@@ -19,7 +30,20 @@ router.get("/", async (req, res) => {
 // get post by id
 router.get("/:id", async (req, res) => {
   try {
-    const postData = await user.findByPk(req.params.id);
+    const postData = await user.findByPk(req.params.id, {
+      attributes: { exclude: ['user_id'] },
+      order: [['date_created', 'DESC']],
+      include: [
+        {
+          model: user,
+          attributes: ['username']
+        },
+        {
+          model: Comment,
+          include: { user, attributes: ['username'] }
+        },
+      ]
+    });
     if (!postData) {
       res.status(404).json({ message: "No post with this id!" });
       return;
@@ -30,7 +54,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 // post a post
-router.post('/', (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
         const postData = await post.create({
             title: req.body.title,
@@ -63,9 +87,13 @@ router.delete("/:id", withAuth, async (req, res) => {
   }
 });
 // edit post
-router.put("/:id", async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
-    const postData = await post.update(req.body, {
+    const postData = await post.update({
+      title: req.body.title,
+      content: req.body.content
+    },
+    {
       where: {
         id: req.params.id,
       },

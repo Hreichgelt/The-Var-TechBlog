@@ -1,8 +1,6 @@
 // @/api/users
 // dependencies
-// Notes : do we need to utilize inclusions/exclusions/attributes?
-
-const router = require("express").router();
+const router = require("express").Router();
 // const bcrypt = require("bcrypt"); - not being used?
 const { user, post, comment } = require("../../models");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
@@ -11,7 +9,11 @@ const withAuth = require("../../utils/auth");
 // get all users
 router.get("/", async (req, res) => {
   try {
-    const userData = await user.findAll();
+    const userData = await user.findAll({
+      attributes: {
+        exclude: ['password']
+      }
+    });
     res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
@@ -19,9 +21,19 @@ router.get("/", async (req, res) => {
 });
 
 // get one user
+// help from classmates
 router.get("/:id", async (req, res) => {
   try {
-    const userData = await user.findByPk(req.params.id);
+    const userData = await user.findByPk(req.params.id, {
+      include: [
+        {
+          model: post, 
+          attributes: {
+            exclude: ['user_id']
+          }
+        }
+      ]
+    });
     if (!userData) {
       res.status(404).json({ message: "No user with this id!" });
       return;
@@ -35,7 +47,7 @@ router.get("/:id", async (req, res) => {
 // create new user with password and info
 router.post("/", async (req, res) => {
   try {
-    const userData = await User.create({
+    const userData = await user.create({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
@@ -49,7 +61,7 @@ router.post("/", async (req, res) => {
 // update a user - from ORM lesson 19
 router.put("/:id", async (req, res) => {
   try {
-    const userData = await User.update(req.body, {
+    const userData = await user.update(req.body, {
       where: {
         id: req.params.id,
       },
@@ -84,6 +96,7 @@ router.post("/login", async (req, res) => {
     }
     req.session.save(() => {
       req.session.user_id = userData.id;
+      req.session.username = userData.username;
       req.session.logged_in = true;
 
       res.json({ user: userData, message: "You are logged in" });
@@ -94,7 +107,7 @@ router.post("/login", async (req, res) => {
 });
 
 // user logout from MVC miniProj
-router.post("/logout", withAuth, (req, res) => {
+router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
@@ -105,7 +118,7 @@ router.post("/logout", withAuth, (req, res) => {
 });
 
 // delete user by id from MVC miniproject
-router.delete("/:id", withAuth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const userData = await user.destroy({
       where: {

@@ -1,12 +1,15 @@
 // server for tech blog
 // dependencies from unit 14 lessons
+require('dotenv').config();
 const path = require("path");
+
 const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const routes = require("./controllers");
-const helpers = require("./utils/helpers");
 
+const routes = require("./controllers");
+
+const helpers = require("./utils/helpers");
 const hbs = exphbs.create({ helpers });
 
 const sequelize = require("./config/connection");

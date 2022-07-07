@@ -14,7 +14,9 @@ async function register(event) {
                 email, 
                 password
             })
-            Headers: {'Content-Type': 'application.json'}
+            Headers: {
+                'Content-Type': 'application/json'
+            }
         });
         if (response.ok) {
             alert('Profile registered');

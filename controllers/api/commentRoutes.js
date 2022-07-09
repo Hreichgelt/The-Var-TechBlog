@@ -1,14 +1,12 @@
-// @/api/comments
-// dependencies
 
-const router = require("express").router();
-// const bcrypt = require("bcrypt"); - not being used?
-const { user, post, comment } = require("../../models");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const withAuth = require("../../utils/auth");
+const router = require('express').Router();
+// const bcrypt = require('bcrypt'); - not being used?
+const { comment } = require('../../models');
+// const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const withAuth = require('../../utils/auth');
 
 // get all comments
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const commentData = await comment.findAll();
     res.status(200).json(commentData);
@@ -18,11 +16,11 @@ router.get("/", async (req, res) => {
 });
 
 // get comment by id
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const commentData = await comment.findByPk(req.params.id);
     if (!commentData) {
-      res.status(404).json({ message: "No comment with this id!" });
+      res.status(404).json({ message: 'No comment with this id!' });
       return;
     }
     res.status(200).json(commentData);
@@ -36,7 +34,7 @@ router.post('/', withAuth, async (req, res) => {
     try {
         const commentData = await comment.create({
             comment_text: req.body.comment_text,
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         })
         res.status(200).json(commentData);
     } catch (err) {
@@ -45,17 +43,17 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 // delete comment
-router.delete("/:id", withAuth, async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   try {
     const commentData = await comment.destroy({
       where: {
         id: req.params.id,
-        user_id: req.session.comment_id,
+        user_id: req.session.user_id,
       },
     });
 
     if (!commentData) {
-      res.status(404).json({ message: "No comment found with this id!" });
+      res.status(404).json({ message: 'No comment found with this id!' });
       return;
     }
 
@@ -65,15 +63,20 @@ router.delete("/:id", withAuth, async (req, res) => {
   }
 });
 // edit comment
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const commentData = await comment.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+    const commentData = await comment.update( 
+        {
+          comment_text: req.body.comment_text,
+        },
+        {
+          where: {
+            id: req.params.id,
+            user_id: req.session.user_id,
+          },
+        });
     if (!commentData[0]) {
-      res.status(404).json({ message: "No comment with this id!" });
+      res.status(404).json({ message: 'No comment with this id!' });
       return;
     }
     res.status(200).json(commentData);

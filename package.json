@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hreichgelt/HbizzleSizzle-TechBlog.git"
+    "url": "git+https://github.com/Hreichgelt/The-Var-TechBlog"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hreichgelt/HbizzleSizzle-TechBlog/issues"
+    "url": "https://github.com/Hreichgelt/The-Var-TechBlog/issues"
   },
-  "homepage": "https://github.com/Hreichgelt/HbizzleSizzle-TechBlog#readme",
+  "homepage": "https://github.com/Hreichgelt/The-Var-TechBlog#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.4",

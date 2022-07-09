@@ -28,6 +28,11 @@ comment.init(
         model: "post",
         key: "id",
       },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     },
   },
 
@@ -35,7 +40,7 @@ comment.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "painting",
+    modelName: "comment",
   }
 );
 module.exports = comment;

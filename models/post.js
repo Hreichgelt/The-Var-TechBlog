@@ -28,6 +28,11 @@ post.init(
         model: "user",
         key: "id",
       },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     },
   },
 
@@ -35,7 +40,7 @@ post.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "gallery",
+    modelName: "post",
   }
 );
 module.exports = post;

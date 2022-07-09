@@ -1,13 +1,13 @@
 // @/api/users
 // dependencies
-const router = require("express").Router();
-// const bcrypt = require("bcrypt"); - not being used?
-const { user, post, comment } = require("../../models");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const withAuth = require("../../utils/auth");
+const router = require('express').Router();
+// const bcrypt = require('bcrypt'); - not being used?
+const { user } = require('../../models');
+// const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// const withAuth = require('../../utils/auth');
 
 // get all users
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const userData = await user.findAll({
       attributes: {
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
 
 // get one user
 // help from classmates
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const userData = await user.findByPk(req.params.id, {
       include: [
@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
       ]
     });
     if (!userData) {
-      res.status(404).json({ message: "No user with this id!" });
+      res.status(404).json({ message: 'No user with this id!' });
       return;
     }
     res.status(200).json(userData);
@@ -45,13 +45,18 @@ router.get("/:id", async (req, res) => {
 });
 
 // create new user with password and info
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const userData = await user.create({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
     });
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+    })
     res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
@@ -59,7 +64,7 @@ router.post("/", async (req, res) => {
 });
 
 // update a user - from ORM lesson 19
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const userData = await user.update(req.body, {
       where: {
@@ -67,7 +72,7 @@ router.put("/:id", async (req, res) => {
       },
     });
     if (!userData[0]) {
-      res.status(404).json({ message: "No user with this id!" });
+      res.status(404).json({ message: 'No user with this id!' });
       return;
     }
     res.status(200).json(userData);
@@ -77,29 +82,30 @@ router.put("/:id", async (req, res) => {
 });
 
 // user login route via UN & PW
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const userData = await user.findOne({ where: { email: req.body.email } });
 
     if (!userData) {
       res
         .status(400)
-        .json({ message: "Incorrect email or password, maybe next time" });
+        .json({ message: 'Incorrect email or password, maybe next time' });
       return;
     }
     const validPassword = await userData.checkPassword(req.body.password);
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: "Incorrect email or password, maybe next time" });
+        .json({ message: 'Incorrect email or password, maybe next time' });
       return;
     }
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
       req.session.logged_in = true;
 
-      res.json({ user: userData, message: "You are logged in" });
+      res.json({ user: userData, message: 'You are logged in' });
     });
   } catch (err) {
     res.status(400).json(err);
@@ -107,7 +113,7 @@ router.post("/login", async (req, res) => {
 });
 
 // user logout from MVC miniProj
-router.post("/logout", (req, res) => {
+router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
@@ -118,7 +124,7 @@ router.post("/logout", (req, res) => {
 });
 
 // delete user by id from MVC miniproject
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const userData = await user.destroy({
       where: {
@@ -128,7 +134,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!userData) {
-      res.status(404).json({ message: "No user found with this id!" });
+      res.status(404).json({ message: 'No user found with this id!' });
       return;
     }
 

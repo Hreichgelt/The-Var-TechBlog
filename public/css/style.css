@@ -78,5 +78,30 @@ header h1 {
     font-size: 2rem;
     border: 4px inset #6d6d6d;
     border-radius: 4px;
-    
+    padding: 1.15rem;
+    background-color: #bbb;
+}
+
+header {
+    display: flex;
+    padding: 1%;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    border-bottom: #ccc;
+}
+
+main {
+    flex: 1;
+    padding: 3%;
+}
+
+.post {
+    margin-bottom: 3%;
+}
+
+.post .title {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: #333;
 }

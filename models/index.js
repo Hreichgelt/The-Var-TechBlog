@@ -11,13 +11,13 @@ user.hasMany(post, {
 post.belongsTo(user, {
   foreignKey: "user_id",
 });
-comment.belongsTo(user, {
-  foreignKey: "user_id",
-  hooks: true,
-});
 user.hasMany(comment, {
   foreignKey: "user_id",
   onDelete: "CASCADE",
+  hooks: true,
+});
+comment.belongsTo(user, {
+  foreignKey: "user_id",
   hooks: true,
 });
 post.hasMany(comment, {

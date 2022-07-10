@@ -1,7 +1,7 @@
 // @/api/posts
 // dependencies
 const router = require('express').Router();
-const { post } = require('../../models');
+const { post, user, comment } = require('../../models');
 // const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const withAuth = require('../../utils/auth');
 
@@ -10,20 +10,21 @@ router.get('/', async (req, res) => {
   try {
     const postData = await post.findAll({
       attributes: { exclude: ['user_id'] },
-      order: [['date_created', 'DESC']],
+      order: [['created_at', 'DESC']],
       include: [
         {
           model: user,
           attributes: ['username']
         },
         {
-          model: Comment,
-          include: { user, attributes: ['username'] }
+          model: comment,
+          // include: { user, attributes: ['username'] }
         },
       ]
     });
     res.status(200).json(postData);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 });

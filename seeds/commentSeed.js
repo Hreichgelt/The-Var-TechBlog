@@ -26,7 +26,7 @@ const commentData = [
         id: 4,
         comment_text: "Open source apps and APIs for inclusivity and easier access to recreation.",
         user_id: 8,
-        post_id: 6,
+        post_id: 5,
         created_at: '2021-09-15T01:01:000Z'
     },
     {

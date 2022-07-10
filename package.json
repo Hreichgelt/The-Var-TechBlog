@@ -8,7 +8,7 @@
     "start": "node server.js",
     "start:dev": "nodemon server",
     "seed": "node seeds/index.js",
-    "db:create": "node config/init.js"  
+    "db:create": "node config/init.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
     "mysql2": "^2.3.3",
+    "normalize.css": "^8.0.1",
     "sequelize": "^6.21.2"
   },
   "devDependencies": {

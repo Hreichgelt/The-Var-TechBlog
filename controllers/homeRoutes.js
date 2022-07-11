@@ -1,5 +1,5 @@
 const router = require('express').Router();
-// const sequelize = require('../config/connection');
+const sequelize = require('../config/connection');
 const { post, user, comment } = require('../models');
 
 // we need to render items on the homepage 
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     ]
     })
     .then(storedPostData => {
-        const posts = storedPostData.map(post.get({ plain: true}));
+        const posts = storedPostData.map(posts.get({ plain: true }));
         res.render('homepage', {
             posts, loggedIn: req.session.loggedIn
         });
@@ -80,6 +80,14 @@ router.get('/post/:id', (req, res) => {
         res.status(500).json(err);
     });
 });
+
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+    res.render('/login');
+})
 
 // send to and render register/signin page
 router.get('/register', (req, res) => {

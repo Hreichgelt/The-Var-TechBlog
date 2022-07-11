@@ -1,10 +1,10 @@
-const { json } = require("sequelize/types");
+// const { json } = require("sequelize/types");
 
 async function register(event) {
     event.preventDefault();
-    const username = $('#username-signup').val.trim();
-    const email = $('#email-signup').val.trim();
-    const password =$('#password-signup').val.trim();
+    const username = document.querySelector('#username-signup').value.trim();
+    const email = document.querySelector('#email-signup').value.trim();
+    const password = document.querySelector('#password-signup').value.trim();
 
     if (username && email && password) {
         const response = await fetch('/api/user', {
@@ -13,7 +13,7 @@ async function register(event) {
                 username,
                 email, 
                 password
-            })
+            }),
             Headers: {
                 'Content-Type': 'application/json'
             }
@@ -26,4 +26,4 @@ async function register(event) {
         }
     }
 }
-$('.register').addEventListener('submit', register);
+document.querySelector('.register').addEventListener('submit', register);

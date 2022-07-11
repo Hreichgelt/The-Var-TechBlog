@@ -3,7 +3,7 @@ async function post(event) {
     const title = $('input[name="post-title"]').value;
     const post_text = $('textarea[name="post-text"]').value;
 
-    const response = await fetch('/api/post', {
+    const response = await fetch(`/api/post`, {
         method: 'POST', 
         body: JSON.stringify({
             title,
@@ -21,4 +21,4 @@ async function post(event) {
     }
 }
 
-$('.new-post-form').addEventListener('submit', post);
+document.querySelector('.new-post-form').addEventListener('submit', post);

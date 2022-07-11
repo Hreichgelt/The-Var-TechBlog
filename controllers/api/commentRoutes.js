@@ -16,18 +16,18 @@ router.get('/', async (req, res) => {
 });
 
 // get comment by id
-router.get('/:id', async (req, res) => {
-  try {
-    const commentData = await comment.findByPk(req.params.id);
-    if (!commentData) {
-      res.status(404).json({ message: 'No comment with this id!' });
-      return;
-    }
-    res.status(200).json(commentData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const commentData = await comment.findByPk(req.params.id);
+//     if (!commentData) {
+//       res.status(404).json({ message: 'No comment with this id!' });
+//       return;
+//     }
+//     res.status(200).json(commentData);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 // post comment
 router.post('/', withAuth, async (req, res) => {
@@ -63,26 +63,26 @@ router.delete('/:id', withAuth, async (req, res) => {
   }
 });
 // edit comment
-router.put('/:id', async (req, res) => {
-  try {
-    const commentData = await comment.update( 
-        {
-          comment_text: req.body.comment_text,
-        },
-        {
-          where: {
-            id: req.params.id,
-            user_id: req.session.user_id,
-          },
-        });
-    if (!commentData[0]) {
-      res.status(404).json({ message: 'No comment with this id!' });
-      return;
-    }
-    res.status(200).json(commentData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.put('/:id', async (req, res) => {
+//   try {
+//     const commentData = await comment.update( 
+//         {
+//           comment_text: req.body.comment_text,
+//         },
+//         {
+//           where: {
+//             id: req.params.id,
+//             user_id: req.session.user_id,
+//           },
+//         });
+//     if (!commentData[0]) {
+//       res.status(404).json({ message: 'No comment with this id!' });
+//       return;
+//     }
+//     res.status(200).json(commentData);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

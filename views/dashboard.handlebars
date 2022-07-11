@@ -2,7 +2,7 @@
     <div class="column">
         <h2>Add a Post</h2>
 
-        <form class="add-post form">
+        <form class="new-post form">
             <div>
                 <label for="post-title">Title</label>
                 <input type="text" id="post-title" name="post-title"/>
@@ -20,7 +20,7 @@
     </div>
 </section>
 
-{{#if posts.length}}
+{{#if post.length}}
 <article>
     <h4>My Posts</h4>
     <ol>
@@ -29,6 +29,7 @@
             {{> post-info post}}
             <a href="/dashboard/edit/{{post.id}}" class="edit-link">Update Post</a>
         </li>
+        {{/each}}
     </ol>
 </article>
 {{/if}}

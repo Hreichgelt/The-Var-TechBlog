@@ -1,6 +1,6 @@
 async function comment(event) {
     event.preventDefault();
-    const comment_text = $('textarea[name="comment-body"]').val.trim();
+    const comment_text = document.querySelector('textarea[name="comment-body"]').value.trim();
     const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
@@ -24,4 +24,4 @@ async function comment(event) {
     }
 }
 
-$('.comment').addEventListener('submit', comment);
+document.querySelector('.comment').addEventListener('submit', comment);

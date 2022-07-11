@@ -9,6 +9,10 @@
         <button type="submit">Publish Comment</button>
     </div>
 </form>
+{{/if}}
+
+{{> comment post.comment}}
+
 {{#if loggedIn}}
-<script src="/public/js/comment.js"></script>
+<script src="/public/js/post.js"></script>
 {{/if}}

@@ -4,19 +4,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Var | MVC Tech Blog</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="public/css/style.css" />
   </head>
 
   <body>
     <div class="wrapper">
       <header class="display-flex">
-        <h1>
-          The Var TechBlog
+        <h1> <a href="/">The Var TechBlog</a> 
         </h1>
       </header>
       <nav>
         <a href="/">Home</a>
         {{#if loggedIn}}
+        <a href="/dashboard">dashboard</a>
           <button id="logout" class="btn-no-style">Logout</button>
         {{else}}
           <a href="/login">Login</a>
@@ -30,5 +30,6 @@
 {{#if loggedIn}}
 <script src="/public/js/logout.js"></script>
 {{/if}}
+
   </body>
 </html>

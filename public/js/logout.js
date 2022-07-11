@@ -9,4 +9,4 @@ async function logout() {
         alert(response.statustText);
     }
 }
-$('.logout').addEventListener('clikc', logout);
+document.querySelector('#logout').addEventListener('click', logout);

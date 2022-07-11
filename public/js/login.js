@@ -1,8 +1,8 @@
 async function login(event){
     event.preventDefault();
 
-    const email = $('#email-login').val.trim();
-    const password = $('#password-login').val.trim();
+    const email = document.querySelector('#email-login').value.trim();
+    const password = document.querySelector('#password-login').value.trim();
 
     if (email && password) {
         const response = await fetch('/api/users/login', {
@@ -10,7 +10,7 @@ async function login(event){
             body: JSON.stringify({
                 email, 
                 password
-            })
+            }),
             headers: { 'Content-Type': 'application.json' }
         });
         if (response.ok) {
@@ -21,4 +21,4 @@ async function login(event){
         }
     }
 }
-$('.login-form').addEventListener('submit', login);
+document.querySelector('.login-form').addEventListener('submit', login);

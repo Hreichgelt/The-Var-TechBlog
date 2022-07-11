@@ -2,7 +2,7 @@
 // dependencies
 const router = require('express').Router();
 // const bcrypt = require('bcrypt'); - not being used?
-const { user } = require('../../models');
+const { user, post } = require('../../models');
 // const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // const withAuth = require('../../utils/auth');
 

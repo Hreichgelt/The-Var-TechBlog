@@ -5,10 +5,10 @@ async function update(event) {
         window.location.toString().split('/').length - 1
     ];
 
-    const title = $('input[name="post-title"]').value;
-    const post_text = $('textarea[name="post-text"]').value;
+    const title = document.querySelector('input[name="post-title"]').value;
+    const post_text = document.querySelector('textarea[name="post-text"]').value;
 
-    const response = await fetch('/api/post/${id}', {
+    const response = await fetch(`/api/post/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
             title, 
@@ -25,4 +25,4 @@ async function update(event) {
     }
 }
 
-$('.update-post-form').addEventListener('submit', update);
+document.querySelector('.update-post-form').addEventListener('submit', update);

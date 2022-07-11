@@ -4,7 +4,7 @@ async function deleteF(event) {
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
-    const response = await fetch('/api/post/${id}', {
+    const response = await fetch(`/api/post/${id}`, {
         method: 'DELETE'
     });
     if (response.ok) {
@@ -14,4 +14,4 @@ async function deleteF(event) {
     }
 }
 
-$('.delete-post-btn').addEventListener('click', deleteF);
+document.querySelector('.delete-post-btn').addEventListener('click', deleteF);

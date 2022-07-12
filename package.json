@@ -8,7 +8,8 @@
     "start": "node server.js",
     "start:dev": "nodemon server",
     "seed": "node seeds/index.js",
-    "db:create": "node config/init.js"
+    "db:create": "node config/init.js",
+    "watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
+    "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
   }
 }

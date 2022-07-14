@@ -3,7 +3,7 @@ const sequelize = require("../config/connection");
 const { post, user, comment } = require("../models");
 
 
-// const serialize = (data) => JSON.parse(JSON.stringify(data));
+const serialize = (data) => JSON.parse(JSON.stringify(data));
 
 // we need to render items on the homepage
 router.get("/", async (req, res) => {
@@ -26,9 +26,9 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    const post = serialize(postData);
+    const posts = serialize(postData);
     res.render("homepage", {
-      post,
+      posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

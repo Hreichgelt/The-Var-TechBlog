@@ -3,12 +3,12 @@
     <h3>
         Edit my Post
     </h3>
-    <form class="update-post-form">
+    <form class="update-post-form" action="/js/updatePost.js">
         <div>
             <input name="post-title" type="text" value="{{post.title}}"/>
         </div>
         <div>
-            <textarea name="post-text">{{post.post_text}}</textarea>
+            <textarea name="post-text">{{post.post-text}}</textarea>
         </div>
         <div>
             You posted on {{format_date post.created_at}}
@@ -29,6 +29,6 @@
 
 {{> comment post.comment}}
 
-<script src="public/js/updatePost.js"></script>
-<script src="public/js/delete.js"></script>
-<script src="public/js/comment.js"></script>
+<script src="/js/updatePost.js"></script>
+<script src="/js/delete.js"></script>
+<script src="/js/comment.js"></script>

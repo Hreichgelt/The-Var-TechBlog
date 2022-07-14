@@ -8,8 +8,8 @@
                 <input type="text" id="post-title" name="post-title"/>
             </div>
             <div>
-                <label for="post-text">Text</label>
-                <textarea id="post-text" name="post-text"></textarea>
+                <label for="post_text">Text</label>
+                <textarea id="post_text" name="post_text"></textarea>
             </div>
             <button type="submit" class="btn">Submit</button>
         </form>
@@ -27,11 +27,18 @@
         {{#each post as |post|}}
         <li>
             {{> post-info post}}
-            <a href="/dashboard/update/{{post.id}}" class="edit-link">Update Post</a>
+            <a href="/dashboard/update-post/{{post.id}}" class="edit-link">Update Post</a>
         </li>
         {{/each}}
     </ol>
 </article>
 {{/if}}
 
-<script src ="/public/js/post.js" ></script>
+
+
+<script src ="/js/login.js" ></script>
+<script src ="/js/post.js" ></script>
+<script src ="/js/updatePost.js" ></script>
+<script src ="/js/updateUser.js" ></script>
+<script src ="/js/logout.js" ></script>
+

@@ -1,5 +1,3 @@
-// server for tech blog
-// dependencies from unit 14 lessons
 require('dotenv').config();
 const path = require('path');
 

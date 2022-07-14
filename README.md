@@ -1,4 +1,6 @@
-# HbizzleSizzle-TechBlog
+# The-Var-TechBlog
+
+<!-- https://afternoon-dusk-00978.herokuapp.com/api/users -->
 
 A CMS-style blog site for publishing articles, blog posts, and my thoughts and opinions
 

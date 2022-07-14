@@ -1,6 +1,7 @@
 async function comment(event) {
     event.preventDefault();
-    const comment_text = document.querySelector('textarea[name="comment-body"]').value.trim();
+
+    const comment_text = document.querySelector('.comment_text').value;
     const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
@@ -9,8 +10,8 @@ async function comment(event) {
         const response = await fetch('/api/comment', {
             method: 'POST',
             body: JSON.stringify({
+                comment_text,
                 post_id,
-                comment_text
             }),
             headers: {
                 'Content-Type': 'applications/json'

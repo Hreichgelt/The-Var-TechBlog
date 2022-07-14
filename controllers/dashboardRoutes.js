@@ -3,9 +3,12 @@ const sequelize = require('../config/connection');
 const { post, user, comment } = require('../models');
 const withAuth = require('../utils/auth');
 
+const serialize = (data) => JSON.parse(JSON.stringify(data));
+
 // render dashboard
-router.get('/', withAuth, (req, res) => {
-    post.findAll({
+router.get('/', withAuth, async (req, res) => {
+    try {
+    const postData = await post.findAll({
         where: {
             user_id: req.session.user_id
         },
@@ -29,69 +32,90 @@ router.get('/', withAuth, (req, res) => {
                 attributes: ['username']
             }
         ]
-    })
-    .then(storedPostData => {
-        const posts = storedPostData.map(post = post.get({ plain: true }));
-        res.render('dashboard', { posts, loggedIn: true });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
     });
+
+    const post = serialize(postData);
+    res.render('dashboard', { post, loggedIn: true });
+} catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+}
 });
 //  edit user info
-router.get('/update-user', withAuth, (req, res) => {
-    user.findOne({
-        attributes: { exclude: ['password'] },
-        where: {
-            id: req.session.user_id
-        }
-    })
-    .then(storedUserData => {
-        if(!storedUserData) {
-            res.status(404).json({ message: 'no user found' });
-            return;
-        }
-        const user = storedUserData.get({ plain: true });
-        res.render('update-user', {user, loggedIn: true});
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    })
+router.put('/:id', withAuth, async (req, res) => {
+    try {
+ const userData = user.update(
+    {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+    });
+
+    if (!userData) {
+      return res.status(404).json({ message: 'No post found.' });
+    }
+    return res.status(200).json(userData);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
+
 // edit post 
-router.get('/update-post', withAuth, (req, res) => {
-    post.findOne({
+router.put('/:id', async (req, res) => {
+    try {
+      const postData = await post.update(
+      {
+        title: req.body.title,
+        post_text: req.body.post_text,
+      },
+      {
         where: {
-            id: req.params.id
+          id: req.params.id,
+          user_id: req.session.user_id,
         },
-        attributes: [
-            'id', 'post_text', 'title', 'created_at'
-        ],
-        include: [{
-            model: comment,
-            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+      });
+  
+      if (!postData) {
+        return res.status(404).json({ message: 'No article found.' });
+      }
+      return res.status(200).json(postData);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+
+  // render existing posts on dashboard 
+  router.get ('/crewate/', withAuth, async (req, res) => {
+    try {
+      res.render('new-post');
+      const postData = await post.findAll({
+        where: { user_id: req.session.user_id },
+        attributes: {
+          exclude: ['user_id']
+        },
+        include: [
+          {
+            model: comment, 
             include: {
-                model: user,
-                attributes: ['username']
+              model: user, 
+              attributes: ['username']
             }
-        }]
-    })
-    .then(storedPostData => {
-        if (!storedPostData) {
-            res.status(404).json({ message: 'No post found' });
-            return;
-        }
-        const post = storedPostData.get({ plain: true });
-        res.render('update-post', { post, loggedIn: true });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        })
-    });
+          },
+          {
+            model: user, 
+            attributes: ['username']
+          }
+        ]
+      });
+      const post = serialize(postData);
+      res.render('homepage', { post, loggedIn: true });
+    } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+    }
+  });
 
 
 module.exports = router;

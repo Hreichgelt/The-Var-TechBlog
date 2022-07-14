@@ -84,12 +84,12 @@ router.put('/:id', async (req, res) => {
 // user login route via UN & PW
 router.post('/login', async (req, res) => {
   try {
-    const userData = await user.findOne({ where: { email: req.body.email } });
+    const userData = await user.findOne({ where: { username: req.body.username } });
 
     if (!userData) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, maybe next time' });
+        .json({ message: 'Incorrect username or password, maybe next time' });
       return;
     }
     const validPassword = await userData.checkPassword(req.body.password);
@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
-      req.session.logged_in = true;
+      req.session.loggedIn = true;
 
       res.json({ user: userData, message: 'You are logged in' });
     });
@@ -114,7 +114,7 @@ router.post('/login', async (req, res) => {
 
 // user logout from MVC miniProj
 router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
     });

@@ -23,16 +23,15 @@ async function register(event) {
     const username = document.querySelector('#username-register').value.trim();
     const email = document.querySelector('#email-register').value.trim();
     const password = document.querySelector('#password-register').value.trim();
-
     if (username && email && password) {
-        const response = await fetch('/api/users', {
+        const response = await fetch('/api/user', {
             method: 'POST', 
-            body: json.stringify({
+            body: JSON.stringify({
                 username,
                 email, 
                 password
             }),
-            Headers: {
+            headers: {
                 'Content-Type': 'application/json'
             }
         });
@@ -45,6 +44,6 @@ async function register(event) {
     }
 }
 
-document.querySelector('#login').addEventListener('submit', login);
-document.querySelector('#register').addEventListener('submit', register);
+document.querySelector('.login').addEventListener('submit', login);
+document.querySelector('.register').addEventListener('submit', register);
 

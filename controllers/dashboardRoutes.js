@@ -87,7 +87,7 @@ router.put('/:id', async (req, res) => {
   });
 
   // render existing posts on dashboard 
-  router.get ('/crewate/', withAuth, async (req, res) => {
+  router.get ('/create/', withAuth, async (req, res) => {
     try {
       res.render('new-post');
       const postData = await post.findAll({
@@ -110,7 +110,7 @@ router.put('/:id', async (req, res) => {
         ]
       });
       const post = serialize(postData);
-      res.render('homepage', { post, loggedIn: true });
+      res.render('dashboard', { post, loggedIn: true });
     } catch (err) {
     console.log(err);
     res.status(500).json(err);

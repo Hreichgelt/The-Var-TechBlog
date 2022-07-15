@@ -26,7 +26,14 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    const posts = serialize(postData);
+    const serPostData = serialize(postData);
+    const posts = serPostData.map(post => {
+      const edited = post;
+      const date = new Date(post.created_at);
+      edited.created_at = date.toDateString();
+      return edited;
+    });
+    console.log(posts)
     res.render("homepage", {
       posts,
       loggedIn: req.session.loggedIn,

@@ -36,10 +36,15 @@ button:hover {
     background-color: green;
 }
 
-.posts-list {
-    margin: 1;
-    padding: 1;
+.post-list {
+    border-radius: 2rem;
+    /* margin: 5; */
+    /* padding: 5; */
     list-style-type: disc;
+}
+
+li {
+    border: solid #bbb .5rem;
 }
 
 textarea {

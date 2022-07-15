@@ -7,7 +7,7 @@ const dashRoute = require('./dashboardRoutes.js');
 
 router.use("/api", apiRoutes);
 router.use("/", homeRoute);
-router.use("/", dashRoute);
+router.use("/dashboard", dashRoute);
 
 // router.use((req, res) => {
 //     res.status(404).end();

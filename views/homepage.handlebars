@@ -1,7 +1,11 @@
 <ul class="post-list">
-    {{#each post as |post|}}
+    {{#each posts}}
     <li>
-        {{> post_text}}
+        <div>Title: {{this.title}}</div>
+        <div>Post: {{this.post_text}}</div>
+        <div>Author: {{this.user.username}}</div>
+        <div>Created on: {{this.created_at}}</div>
     </li>
     {{/each}}
 </ul>
+

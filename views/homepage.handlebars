@@ -1,12 +1,3 @@
-<ul class="post-list">
-    {{#each posts}}
-    <li>
-        <div>Title: {{this.title}}</div>
-        <div>Post: {{this.post_text}}</div>
-        <div>Author: {{this.user.username}}</div>
-        <div>Created on: {{this.created_at}}</div>
-    </li>
-    {{/each}}
-</ul>
-
-
+{{#each posts as |post|}}
+{{> post-partial}}
+{{/each}}

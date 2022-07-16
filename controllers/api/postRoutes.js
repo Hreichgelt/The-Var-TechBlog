@@ -2,7 +2,6 @@
 // dependencies
 const router = require('express').Router();
 const { post, user, comment } = require('../../models');
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const withAuth = require('../../utils/auth');
 
 // get all posts - help from classmates
@@ -55,20 +54,20 @@ router.get('/:id', async (req, res) => {
   }
 });
 // post a post
-router.post('/', withAuth, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const postData = await post.create({
+        const newPost = await post.create({
             title: req.body.title,
             post_text: req.body.post_text,
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         })
-        res.status(200).json(postData);
+      return res.status(200).json(newPost);
     } catch (err) {
-        res.status(400).json(err);
+       return res.status(400).json(err);
     }
 });
 // delete post
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const postData = await post.destroy({
       where: {
@@ -78,17 +77,15 @@ router.delete('/:id', withAuth, async (req, res) => {
     });
 
     if (!postData) {
-      res.status(404).json({ message: 'No post found with this id!' });
-      return;
+      return res.status(404).json({ message: 'No post found with this id!' });
     }
-
-    res.status(200).json(postData);
+    return res.status(200).json(postData);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 // edit post
-router.put('/:id', withAuth, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const postData = await post.update({
       title: req.body.title,
@@ -101,12 +98,11 @@ router.put('/:id', withAuth, async (req, res) => {
       },
     });
     if (!postData[0]) {
-      res.status(404).json({ message: 'No post with this id!' });
-      return;
+      return res.status(404).json({ message: 'No post with this id!' });
     }
-    res.status(200).json(postData);
+    return res.status(200).json(postData);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 module.exports = router;

@@ -6,7 +6,7 @@ async function update(event) {
     ];
 
     const title = document.querySelector('input[name="post-title"]').value;
-    const post_text = document.querySelector('textarea[name="post-text"]').value;
+    const post_text = document.querySelector('textarea[name="post_text"]').value;
 
     const response = await fetch(`/api/post/${id}`, {
         method: 'PUT',

@@ -1,58 +1,8 @@
 // @/api/users
 // dependencies
 const router = require('express').Router();
-const { user, post, comment } = require('../../models');
+const { user } = require('../../models');
 
-
-// get all users
-router.get('/', async (req, res) => {
-  try {
-    const userData = await user.findAll({
-      attributes: { exclude: ['password']}
-    });
-    if (!userData) {
-      res.status(404).json({ message: 'No users found!' });
-      return;
-    }
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// get one user
-// help from classmates
-router.get('/:id', async (req, res) => {
-  try {
-    const userData = await user.findOne({
-      attributes: { exclude: ['password'] },
-      where: { id: req.params.id },
-
-      include: [
-        {
-          model: Post,
-          attributes: ['id', 'title', 'post_text', 'created_at']
-        },
-        {
-            model: Comment,
-            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-            include: {
-                model: Post,
-                attributes: ['title']
-            }
-        }
-      ]
-    })
-
-    if (!userData) {
-      res.status(404).json({ message: 'No user with this id!' });
-      return;
-    }
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 // create new user with password and info
 router.post('/', async (req, res) => {
@@ -72,24 +22,6 @@ router.post('/', async (req, res) => {
     })
   } catch (err) {
     res.status(400).json(err);
-  }
-});
-
-// update a user - from ORM lesson 19
-router.put('/:id', async (req, res) => {
-  try {
-    const userData = await user.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!userData[0]) {
-      res.status(404).json({ message: 'No user with this id!' });
-      return;
-    }
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
   }
 });
 
@@ -132,27 +64,6 @@ router.post('/logout', (req, res) => {
     });
   } else {
     res.status(404).end();
-  }
-});
-
-// delete user by id from MVC miniproject
-router.delete('/:id', async (req, res) => {
-  try {
-    const userData = await user.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
-
-    if (!userData) {
-      res.status(404).json({ message: 'No user found with this id!' });
-      return;
-    }
-
-    res.status(200).json(userData);
-  } catch (err) {
-    res.status(500).json(err);
   }
 });
 

@@ -27,32 +27,7 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-// get post by id
-router.get('/:id', async (req, res) => {
-  try {
-    const postData = await user.findByPk(req.params.id, {
-      attributes: { exclude: ['user_id'] },
-      order: [['date_created', 'DESC']],
-      include: [
-        {
-          model: user,
-          attributes: ['username']
-        },
-        {
-          model: Comment,
-          include: { user, attributes: ['username'] }
-        },
-      ]
-    });
-    if (!postData) {
-      res.status(404).json({ message: 'No post with this id!' });
-      return;
-    }
-    res.status(200).json(postData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+
 // post a post
 router.post('/', async (req, res) => {
     try {

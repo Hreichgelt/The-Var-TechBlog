@@ -29,12 +29,10 @@ router.get('/dashboard', async (req, res) => {
 });
 
 
-  // render existing posts on dashboard 
- // // get post by id
-router.get('/post/:id', async (req, res) => {
+  // read article
+router.get('/:id', async (req, res) => {
   try {
     const postData = await post.findByPk(req.params.id, {
-      order: [['date_created', 'DESC']],
       include: [
         {
           model: user,

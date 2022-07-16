@@ -2,31 +2,6 @@
 // dependencies
 const router = require('express').Router();
 const { post, user, comment } = require('../../models');
-const withAuth = require('../../utils/auth');
-
-// get all posts - help from classmates
-router.get('/', async (req, res) => {
-  try {
-    const postData = await post.findAll({
-      attributes: { exclude: ['user_id'] },
-      order: [['created_at', 'DESC']],
-      include: [
-        {
-          model: user,
-          attributes: ['username']
-        },
-        {
-          model: comment,
-          // include: { user, attributes: ['username'] }
-        },
-      ]
-    });
-    res.status(200).json(postData);
-  } catch (err) {
-    console.log(err)
-    res.status(500).json(err);
-  }
-});
 
 // post a post
 router.post('/', async (req, res) => {
@@ -81,3 +56,29 @@ router.put('/:id', async (req, res) => {
   }
 });
 module.exports = router;
+
+
+// SAVE FOR LATER
+// get all posts - help from classmates
+// router.get('/', async (req, res) => {
+//   try {
+//     const postData = await post.findAll({
+//       attributes: { exclude: ['user_id'] },
+//       order: [['created_at', 'DESC']],
+//       include: [
+//         {
+//           model: user,
+//           attributes: ['username']
+//         },
+//         {
+//           model: comment,
+//           // include: { user, attributes: ['username'] }
+//         },
+//       ]
+//     });
+//     res.status(200).json(postData);
+//   } catch (err) {
+//     console.log(err)
+//     res.status(500).json(err);
+//   }
+// });

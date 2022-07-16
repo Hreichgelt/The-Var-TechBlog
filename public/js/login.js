@@ -12,7 +12,7 @@ const login = async (event) => {
             headers: { 'Content-Type': 'application/json' }
         });
         if (response.ok) { alert('Logged in!');
-            document.location.replace('/dashboard');
+            document.location.replace('/');
         } else {
             alert('Failed, please try again.')
         }

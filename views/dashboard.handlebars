@@ -1,4 +1,28 @@
 
+<section class="row">
+    <div class="column">
+        <h2>Add a Post</h2>
+
+        <form class="new-post form">
+            <div>
+                <label for="post-title">Title</label>
+                <input type="text" id="post-title" name="post-title"/>
+                <textarea id="post-title" name="post-title">
+                    {{post-title}}
+                </textarea>
+            </div>
+            <div>
+                <label for="post-text">Text</label>
+                <textarea id="post-text" name="post-text">
+                    {{post-text}}
+                </textarea>
+            </div>
+            <button type="submit" class="btn" value="Submit">Submit</button>
+        </form>
+    </div>
+</section>
+
+
 
 {{#if posts.length}}
 <article>
@@ -14,24 +38,6 @@
 </article>
 {{/if}}
 
-
-<section class="row">
-    <div class="column">
-        <h2>Add a Post</h2>
-
-        <form class="new-post form">
-            <div>
-                <label for="post-title">Title</label>
-                <input type="text" id="post-title" name="post-title"/>
-            </div>
-            <div>
-                <label for="post_text">Text</label>
-                <textarea id="post_text" name="post_text"></textarea>
-            </div>
-            <button type="submit" class="btn">Submit</button>
-        </form>
-    </div>
-</section>
 
 
 

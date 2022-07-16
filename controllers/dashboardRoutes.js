@@ -5,6 +5,8 @@ const withAuth = require('../utils/auth');
 
 const serialize = (data) => JSON.parse(JSON.stringify(data));
 
+
+
 // render dashboard
 router.get('/dashboard', withAuth, async (req, res) => {
     try {
@@ -12,35 +14,25 @@ router.get('/dashboard', withAuth, async (req, res) => {
         where: {
             user_id: req.session.user_id
         },
-        attributes: [
-            'id',
-            'post_text',
-            'title',
-            'created_at',
-        ],
-        include: [
-            {
-                model: comment,
-                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                include: {
-                    model: user, 
-                    attributes: ['username']
-                }
-            },
-            {
-                model: user,
-                attributes: ['username']
-            }
-        ]
-    });
+       include: { model: user },
+      });
 
-    const post = serialize(postData);
-    res.render('dashboard', { post, loggedIn: true });
+      const posts = postData.map((post) =>
+      post.get({ plain: true }))
+
+    res.render('dashboard', { posts, loggedIn: true });
+
 } catch (err) {
     console.log(err);
     res.status(500).json(err);
 }
 });
+
+
+
+
+
+
 //  edit user info
 router.put('/:id', withAuth, async (req, res) => {
     try {

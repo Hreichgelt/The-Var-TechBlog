@@ -1,19 +1,19 @@
 // @/api/users
 // dependencies
 const router = require('express').Router();
-// const bcrypt = require('bcrypt'); - not being used?
-const { user, post } = require('../../models');
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
-// const withAuth = require('../../utils/auth');
+const { user, post, comment } = require('../../models');
+
 
 // get all users
 router.get('/', async (req, res) => {
   try {
     const userData = await user.findAll({
-      attributes: {
-        exclude: ['password']
-      }
+      attributes: { exclude: ['password']}
     });
+    if (!userData) {
+      res.status(404).json({ message: 'No users found!' });
+      return;
+    }
     res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
@@ -24,16 +24,26 @@ router.get('/', async (req, res) => {
 // help from classmates
 router.get('/:id', async (req, res) => {
   try {
-    const userData = await user.findByPk(req.params.id, {
+    const userData = await user.findOne({
+      attributes: { exclude: ['password'] },
+      where: { id: req.params.id },
+
       include: [
         {
-          model: post, 
-          attributes: {
-            exclude: ['user_id']
-          }
+          model: Post,
+          attributes: ['id', 'title', 'post_text', 'created_at']
+        },
+        {
+            model: Comment,
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            include: {
+                model: Post,
+                attributes: ['title']
+            }
         }
       ]
-    });
+    })
+
     if (!userData) {
       res.status(404).json({ message: 'No user with this id!' });
       return;
@@ -47,7 +57,7 @@ router.get('/:id', async (req, res) => {
 // create new user with password and info
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     const userData = await user.create({
       username: req.body.username,
       email: req.body.email,
@@ -55,10 +65,11 @@ router.post('/', async (req, res) => {
     });
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.logged_in = true;
+      req.session.email = userData.email;
+      req.session.loggedIn = true;
 
+      res.status(200).json(userData);
     })
-    res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -82,28 +93,28 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// user login route via UN & PW
+// user login route via email & PW
 router.post('/login', async (req, res) => {
   try {
-    const userData = await user.findOne({ where: { username: req.body.username } });
+    const userData = await user.findOne({ where: { email: req.body.email } });
 
     if (!userData) {
       res
         .status(400)
-        .json({ message: 'Incorrect username or password, maybe next time' });
+        .json({ message: 'Incorrect email, maybe next time' });
       return;
     }
     const validPassword = await userData.checkPassword(req.body.password);
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, maybe next time' });
+        .json({ message: 'Incorrect password, maybe next time' });
       return;
     }
 
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.username = userData.username;
+      req.session.email = userData.email;
       req.session.loggedIn = true;
 
       res.json({ user: userData, message: 'You are logged in' });

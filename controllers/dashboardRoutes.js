@@ -6,7 +6,7 @@ const withAuth = require('../utils/auth');
 const serialize = (data) => JSON.parse(JSON.stringify(data));
 
 // render dashboard
-router.get('/', withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
     try {
     const postData = await post.findAll({
         where: {

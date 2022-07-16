@@ -37,14 +37,17 @@ button:hover {
 }
 
 .post-list {
-    border-radius: 2rem;
-    /* margin: 5; */
-    /* padding: 5; */
+    border-radius: 15%;
+    margin: 10;
+    padding: 10;
     list-style-type: disc;
 }
 
 li {
     border: solid #bbb .5rem;
+    margin: 5;
+    padding: 5;
+    /* border-radius: 5rem; */
 }
 
 textarea {

@@ -1,3 +1,20 @@
+
+
+{{#if posts.length}}
+<article>
+    <h4>My Posts</h4>
+    <ol>
+        {{#each posts as |post|}}
+        <li>
+            {{> post-info post}}
+            <a href="/dashboard/update-post/{{post.id}}" class="edit-link">Update Post</a>
+        </li>
+        {{/each}}
+    </ol>
+</article>
+{{/if}}
+
+
 <section class="row">
     <div class="column">
         <h2>Add a Post</h2>
@@ -14,25 +31,7 @@
             <button type="submit" class="btn">Submit</button>
         </form>
     </div>
-    <div class="column">
-        <h3>About the Author</h3>
-        {{> user-info}}
-    </div>
 </section>
-
-{{#if post.length}}
-<article>
-    <h4>My Posts</h4>
-    <ol>
-        {{#each post as |post|}}
-        <li>
-            {{> post-info post}}
-            <a href="/dashboard/update-post/{{post.id}}" class="edit-link">Update Post</a>
-        </li>
-        {{/each}}
-    </ol>
-</article>
-{{/if}}
 
 
 
@@ -41,4 +40,3 @@
 <script src ="/js/updatePost.js" ></script>
 <script src ="/js/updateUser.js" ></script>
 <script src ="/js/logout.js" ></script>
-

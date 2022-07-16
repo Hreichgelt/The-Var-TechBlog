@@ -45,6 +45,6 @@ async function register(event) {
     }
 }
 
-document.querySelector('.login').addEventListener('submit', login);
-document.querySelector('.register').addEventListener('submit', register);
+document.querySelector('.login').addEventListener('click', login);
+document.querySelector('.register').addEventListener('click', register);
 

@@ -10,6 +10,8 @@ const withAuth = require("../utils/auth");
 router.get('/createPost', withAuth, async (req, res) => {
     try {
     const postData = await post.findAll({
+      attributes: ["id", "post_text", "title", "created_at"],
+      order: [["created_at", "DESC"]],
         where: {
             user_id: req.session.user_id
         },
@@ -61,7 +63,7 @@ router.get('/posts/:id', async (req, res) => {
 
     res.render('post', {
       post: postCopy, 
-      // loggedIn: req.session.loggedIn
+      loggedIn: req.session.loggedIn
     });
   } catch (err) {
     res.status(500).json(err);

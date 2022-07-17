@@ -3,7 +3,7 @@ const { post, user, comment } = require('../models');
 
 // const serialize = (data) => JSON.parse(JSON.stringify(data));
 
-// render dashboard
+// render dashboard with posts
 router.get('/dashboard', async (req, res) => {
     try {
     const postData = await post.findAll({
@@ -29,16 +29,16 @@ router.get('/dashboard', async (req, res) => {
 });
 
 
-  // read article
-router.get('/:id', async (req, res) => {
+  // read post
+router.get('/posts/:id', async (req, res) => {
   try {
     const postData = await post.findByPk(req.params.id, {
       include: [
         {
           model: user,
           attributes: {
-            include: ['username']
-          } 
+            include: ["username"],
+          },
         },
         {
           model: comment,
@@ -46,14 +46,14 @@ router.get('/:id', async (req, res) => {
             {
               model: user,
               attributes: {
-                include: ['username']
-              }
-            }
-          ]
-        }
-      ]
+                include: ["username"],
+              },
+            },
+          ],
+        },
+      ],
     });
-    const post = JSON.parse(JSON.stringify(postData));
+    const posts = JSON.parse(JSON.stringify(postData));
 
     res.render('post', {
       post: post, 
@@ -68,49 +68,3 @@ router.get('/:id', async (req, res) => {
 
 module.exports = router;
 
-
-// SAVE FOR LATER
-//  edit user info
-// router.put('/:id', async (req, res) => {
-//     try {
-//  const userData = user.update(
-//     {
-//       where: {
-//         id: req.params.id,
-//         user_id: req.session.user_id,
-//       },
-//     });
-
-//     if (!userData) {
-//       return res.status(404).json({ message: 'No post found.' });
-//     }
-//     return res.status(200).json(userData);
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// });
-
-
-// // edit post 
-// router.put('/:id', async (req, res) => {
-//     try {
-//       const postData = await post.update(
-//       {
-//         title: req.body.title,
-//         post_text: req.body.post_text,
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//           user_id: req.session.user_id,
-//         },
-//       });
-  
-//       if (!postData) {
-//         return res.status(404).json({ message: 'No article found.' });
-//       }
-//       return res.status(200).json(postData);
-//     } catch (err) {
-//       return res.status(500).json(err);
-//     }
-//   });

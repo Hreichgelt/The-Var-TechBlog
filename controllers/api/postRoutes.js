@@ -3,7 +3,7 @@
 const router = require('express').Router();
 const { post, user, comment } = require('../../models');
 
-// post a post
+// create a post
 router.post('/', async (req, res) => {
     try {
         const newPost = await post.create({

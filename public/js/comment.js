@@ -25,4 +25,4 @@ async function comment(event) {
     }
 }
 
-document.querySelector('.comment').addEventListener('submit', comment);
+document.querySelector('#mew-comment-form').addEventListener('submit', comment);

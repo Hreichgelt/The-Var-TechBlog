@@ -1,9 +1,24 @@
 # The-Var-TechBlog
 
-<!-- https://afternoon-dusk-00978.herokuapp.com/api/users -->
+
+[LIVE SITE README](https://hreichgelt.github.io/Express-Note-Taking-Champs/)
+
+[HEROKU Live](https://afternoon-dusk-00978.herokuapp.com/api/users)
+
+
+## TABLE OF CONTENTS
+
+1. [Description](#description)
+2. [Usage](#USAGE)
+3. [Visuals](#visuals)
+4. [Authors Acknowledgments](#authors-and-acknowledgments)
+5. [Resources](#resources)
+
+## DESCRIPTION
 
 A CMS-style blog site for publishing articles, blog posts, and my thoughts and opinions
 
+## USAGE
 GIVEN a CMS-style blog site
 WHEN I visit the site for the first time
 THEN I am presented with the homepage, which includes existing blog posts if any have been posted; navigation links for the homepage and the dashboard; and the option to log in
@@ -47,3 +62,26 @@ WHEN I click on the logout option in the navigation
 THEN I am signed out of the site
 WHEN I am idle on the site for more than a set time
 THEN I am able to view comments but I am prompted to log in again before I can add, update, or delete comments
+
+
+## VISUALS
+
+[Demo video]()
+
+
+
+![Heroku Page]()
+
+
+## AUTHORS AND ACKNOWLEDGMENTS
+
+## RESOURCES
+
+1. [LIVE SITE](https://afternoon-dusk-00978.herokuapp.com/api/users)
+
+2. [REPOSITORY](https://github.com/Hreichgelt/The-Var-TechBlog)
+
+
+
+
+

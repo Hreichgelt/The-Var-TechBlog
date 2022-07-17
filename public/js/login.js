@@ -38,7 +38,7 @@ async function register(event) {
         });
         if (response.ok) {
             alert('Profile registered');
-            document.location.replace('/dashboard');
+            document.location.replace('/createPost');
         } else {
             alert(response.statusText)
         }

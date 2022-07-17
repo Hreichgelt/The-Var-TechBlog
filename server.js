@@ -19,12 +19,12 @@ const PORT = process.env.PORT || 3001;
 
 const sess = {
   secret: 'saucy sauce',
-  cookie: { maxAge: 86400 },
+  cookie: { maxAge: 1000 * 60 * 60 * 24 },
   resave: false,
   saveUninitialized: true,
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
+  // store: new SequelizeStore({
+  //   db: sequelize,
+  // }),
 };
 
 

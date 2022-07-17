@@ -2,19 +2,20 @@
 
 <div>
         <h2>{{post.title}}</h2>
-        <p id="author">Post By{{post.user.username}} on {{format_date post.created_at}}</p>
+        <p id="author">Post By {{post.user.username}} on {{post.createdAt}}</p>
 
         <p>{{post.post_text}}</p>
     
     <div>
         <h3>Comments</h3>
-        {{#each post.comment as |comment|}}
-        {{> comment}}
+        {{#each post.comments}}
+        <p>{{this.comment_text}}</p>
+        <p id="commentor">{{this.user.username}} on {{this.createdAt}}</p>
         {{/each}}
     </div>
 
     <form id="new-comment-form">
-        <textarea id="text" name="text">
+        <textarea id="comment_text" name="text">
             {{text}}
         </textarea>
         <button type="submit" value="Submit">Submit</button>

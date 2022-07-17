@@ -1,7 +1,8 @@
+console.log('hotdog');
 async function comment(event) {
     event.preventDefault();
 
-    const comment_text = document.querySelector('.comment_text').value;
+    const comment_text = document.querySelector('#comment_text').value;
     const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
@@ -14,7 +15,7 @@ async function comment(event) {
                 post_id,
             }),
             headers: {
-                'Content-Type': 'applications/json'
+                'Content-Type': 'application/json'
             }
         });
         if (response.ok) {
@@ -25,4 +26,4 @@ async function comment(event) {
     }
 }
 
-document.querySelector('#mew-comment-form').addEventListener('submit', comment);
+document.querySelector('#new-comment-form').addEventListener('submit', comment);

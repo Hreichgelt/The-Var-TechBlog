@@ -1,10 +1,13 @@
 const router = require('express').Router();
 const { post, user, comment } = require('../models');
 
+const withAuth = require("../utils/auth");
+
+
 // const serialize = (data) => JSON.parse(JSON.stringify(data));
 
-// render dashboard with posts
-router.get('/dashboard', async (req, res) => {
+// render createPost 
+router.get('/createPost', withAuth, async (req, res) => {
     try {
     const postData = await post.findAll({
         where: {
@@ -16,7 +19,7 @@ router.get('/dashboard', async (req, res) => {
       const posts = postData.map((post) =>
       post.get({ plain: true }))
 
-    res.render('dashboard', 
+    res.render('createPost', 
     {
        posts, 
        loggedIn: req.session.loggedIn,
@@ -53,11 +56,12 @@ router.get('/posts/:id', async (req, res) => {
         },
       ],
     });
-    const posts = JSON.parse(JSON.stringify(postData));
+    const postCopy = JSON.parse(JSON.stringify(postData));
+    console.log(postCopy);
 
     res.render('post', {
-      post: post, 
-      loggedIn: req.session.loggedIn
+      post: postCopy, 
+      // loggedIn: req.session.loggedIn
     });
   } catch (err) {
     res.status(500).json(err);

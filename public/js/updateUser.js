@@ -25,7 +25,7 @@ async function update(event) {
         }
     });
     if (response.ok) {
-        document.location.replace('/dashboard');
+        document.location.replace('/createPost');
     } else {
         alert(response.statusText);
     }

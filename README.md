@@ -1,6 +1,5 @@
 # The-Var-TechBlog
 
-
 [LIVE SITE README](https://hreichgelt.github.io/Express-Note-Taking-Champs/)
 
 [HEROKU Live](https://afternoon-dusk-00978.herokuapp.com/api/users)
@@ -66,14 +65,13 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 
 ## VISUALS
 
-[Demo video]()
+[Demo video](https://drive.google.com/file/d/1zGIOyrzPWxj3nhMwUZEsUHyYK8e2Q-sr/view)
 
-
-
-![Heroku Page]()
+![Heroku Page](/assets/HerokuPage.png)
 
 
 ## AUTHORS AND ACKNOWLEDGMENTS
+
 
 ## RESOURCES
 

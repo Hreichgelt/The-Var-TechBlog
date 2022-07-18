@@ -2,7 +2,7 @@
 
 [LIVE SITE README](https://hreichgelt.github.io/Express-Note-Taking-Champs/)
 
-[HEROKU Live](https://afternoon-dusk-00978.herokuapp.com/api/users)
+[HEROKU Live](https://afternoon-dusk-00978.herokuapp.com/)
 
 
 ## TABLE OF CONTENTS

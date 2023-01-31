@@ -1,6 +1,6 @@
 # The-Var-TechBlog
 
-[LIVE SITE README](https://hreichgelt.github.io/Express-Note-Taking-Champs/)
+[LIVE SITE README](https://github.com/Hreichgelt/The-Var-TechBlog)
 
 [HEROKU Live](https://afternoon-dusk-00978.herokuapp.com/)
 
